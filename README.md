@@ -251,7 +251,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## 👥 Tác giả
 
-- **Your Name** - [GitHub Profile](https://github.com/your-Onyxcapiti)
+- **Onyxcapiti** - [GitHub Profile](https://github.com/your-Onyxcapiti)
 
 ## 🙏 Lời cảm ơn
 
@@ -275,5 +275,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 - ✅ Keyboard shortcuts
 
 ---
+
 
 Made with ❤️ for learning
