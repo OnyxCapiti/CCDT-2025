@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn luyện - Đấu thầu</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/practice.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --bg-light: #f3f4f6;
+            --text-dark: #1f2937;
+            --text-gray: #6b7280;
+            --border: #e5e7eb;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background: var(--white);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .btn-home {
+            padding: 10px 20px;
+            background: var(--primary);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-home:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-reset {
+            padding: 10px 20px;
+            background: var(--warning);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .btn-reset:hover {
+            background: #d97706;
+        }
+
+        /* Main Layout */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 20px;
+            flex: 1;
+        }
+
+        /* Question Section */
+        .question-section {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar {
+            background: var(--bg-light);
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--success));
+            transition: width 0.3s ease;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .question-number {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .question-count {
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        .question-text {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        /* Answer Options */
+        .answers-grid {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .answer-btn {
+            padding: 20px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            background: var(--white);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+            font-size: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .answer-label {
+            min-width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: var(--bg-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--text-dark);
+            flex-shrink: 0;
+        }
+
+        .answer-text {
+            flex: 1;
+            line-height: 1.6;
+            padding-top: 5px;
+        }
+
+        .answer-btn:hover:not(.correct):not(.wrong) {
+            border-color: var(--primary);
+            background: #eff6ff;
+        }
+
+        .answer-btn.correct {
+            border-color: var(--success);
+            background: #f0fdf4;
+        }
+
+        .answer-btn.correct .answer-label {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .answer-btn.wrong {
+            border-color: var(--error);
+            background: #fef2f2;
+        }
+
+        .answer-btn.wrong .answer-label {
+            background: var(--error);
+            color: var(--white);
+        }
+
+        .answer-btn:disabled {
+            cursor: not-allowed;
+        }
+
+        /* Navigation */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+
+        .btn-prev {
+            background: var(--bg-light);
+            color: var(--text-dark);
+        }
+
+        .btn-prev:hover:not(:disabled) {
+            background: var(--border);
+        }
+
+        .btn-next {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-next:hover:not(:disabled) {
+            background: var(--primary-dark);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 90px;
+            height: fit-content;
+            max-height: calc(100vh - 110px);
+            overflow-y: auto;
+        }
+
+        .sidebar-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
+
+        .question-item {
+            aspect-ratio: 1;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s;
+            background: var(--white);
+        }
+
+        .question-item:hover {
+            border-color: var(--primary);
+            background: #eff6ff;
+        }
+
+        .question-item.active {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        .question-item.answered {
+            background: #f0fdf4;
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        .question-item.answered.active {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 18px;
+            color: var(--text-gray);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+                max-height: none;
+            }
+
+            .question-grid {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .question-section {
+                padding: 20px;
+            }
+
+            .question-text {
+                font-size: 16px;
+            }
+
+            .answer-btn {
+                padding: 15px;
+                font-size: 15px;
+            }
+
+            .question-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <h1 class="header-title">📖 Chế độ Ôn luyện</h1>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <button class="btn-reset" id="btnReset">🔄 Học lại</button>
+                <a href="index.html" class="btn-home">🏠 Về trang chủ</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Question Section -->
+        <div class="question-section">
+            <div id="loading" class="loading">
+                Đang tải câu hỏi...
+            </div>
+
+            <div id="quiz-content" style="display: none;">
+                <!-- Progress Bar -->
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar"></div>
+                </div>
+
+                <!-- Question Header -->
+                <div class="question-header">
+                    <span class="question-number" id="questionNumber">Câu 1</span>
+                    <span class="question-count" id="questionCount">1/340</span>
+                </div>
+
+                <!-- Question Text -->
+                <div class="question-text" id="questionText">
+                    Đang tải câu hỏi...
+                </div>
+
+                <!-- Answers -->
+                <div class="answers-grid" id="answersGrid">
+                    <!-- Answers will be inserted here -->
+                </div>
+
+                <!-- Navigation -->
+                <div class="navigation">
+                    <button class="nav-btn btn-prev" id="btnPrev">⬅ Câu trước</button>
+                    <button class="nav-btn btn-next" id="btnNext">Câu sau ➡</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-title">Danh sách câu hỏi</div>
+            <div class="question-grid" id="questionGrid">
+                <!-- Question numbers will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Import practice.js -->
+    <script src="js/practice.js"></script>
+</body>
+</html>

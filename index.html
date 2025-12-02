@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn thi Chứng chỉ Nghiệp vụ Đấu thầu</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --success: #10b981;
+            --bg-light: #f3f4f6;
+            --text-dark: #1f2937;
+            --text-gray: #6b7280;
+            --border: #e5e7eb;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* Header */
+        header {
+            background: var(--white);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px 0;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 0;
+        }
+
+        .home-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .home-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+
+        .home-subtitle {
+            font-size: 16px;
+            color: var(--text-gray);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        /* Info Cards */
+        .info-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .info-card {
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid var(--border);
+        }
+
+        .info-label {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-bottom: 8px;
+        }
+
+        .info-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Mode Buttons */
+        .mode-buttons {
+            display: grid;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .mode-btn {
+            display: block;
+            padding: 25px 40px;
+            font-size: 20px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mode-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.2);
+            transition: left 0.3s ease;
+        }
+
+        .mode-btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-practice {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--white);
+        }
+
+        .btn-practice:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-exam {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: var(--white);
+        }
+
+        .btn-exam:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+        }
+
+        .btn-icon {
+            margin-right: 10px;
+            font-size: 24px;
+        }
+
+        /* Description */
+        .mode-description {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 15px 20px;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .mode-description h3 {
+            color: #92400e;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .mode-description ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .mode-description li {
+            color: #78350f;
+            font-size: 14px;
+            margin-bottom: 5px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .mode-description li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #f59e0b;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--white);
+            padding: 20px 0;
+            text-align: center;
+            color: var(--text-gray);
+            font-size: 14px;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .home-card {
+                padding: 30px 20px;
+            }
+
+            .home-title {
+                font-size: 24px;
+            }
+
+            .info-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .mode-btn {
+                font-size: 18px;
+                padding: 20px 30px;
+            }
+
+            .header-title {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1 class="header-title">📚 Hệ thống Ôn thi Chứng chỉ Nghiệp vụ Đấu thầu</h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <div class="home-card">
+                <h2 class="home-title">Chào mừng bạn!</h2>
+                <p class="home-subtitle">
+                    Hệ thống ôn tập và thi thử chứng chỉ nghiệp vụ chuyên môn về đấu thầu.<br>
+                    Chọn chế độ học tập phù hợp với bạn.
+                </p>
+
+                <!-- Info Cards -->
+                <div class="info-cards">
+                    <div class="info-card">
+                        <div class="info-label">Tổng số câu hỏi</div>
+                        <div class="info-value">340</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">Thời gian thi</div>
+                        <div class="info-value">30 phút</div>
+                    </div>
+                </div>
+
+                <!-- Mode Buttons -->
+                <div class="mode-buttons">
+                    <a href="practice.html" class="mode-btn btn-practice">
+                        <span class="btn-icon">📖</span>
+                        Chế độ Ôn luyện
+                    </a>
+                    <a href="exam.html" class="mode-btn btn-exam">
+                        <span class="btn-icon">🎯</span>
+                        Chế độ Thi thử
+                    </a>
+                </div>
+
+                <!-- Description -->
+                <div class="mode-description">
+                    <h3>📌 Hướng dẫn:</h3>
+                    <ul>
+                        <li><strong>Ôn luyện:</strong> Làm cả 340 câu, xem đáp án ngay lập tức</li>
+                        <li><strong>Thi thử:</strong> 70 câu ngẫu nhiên, 30 phút, đạt ≥ 50% để qua</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Hệ thống Ôn thi Đấu thầu. Phát triển cho mục đích học tập.</p>
+        </div>
+    </footer>
+</body>
+</html>
