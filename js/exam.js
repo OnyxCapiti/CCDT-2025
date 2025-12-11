@@ -121,6 +121,12 @@ function showError(message) {
  * Start countdown timer
  */
 function startTimer() {
+    // Clear any existing timer first to prevent multiple intervals
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+    
     updateTimerDisplay();
     
     timerInterval = setInterval(() => {
@@ -136,6 +142,7 @@ function startTimer() {
         // Time's up
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
+            timerInterval = null;
             alert('⏰ Hết giờ! Bài thi sẽ được nộp tự động.');
             submitExam();
         }
@@ -565,16 +572,21 @@ document.addEventListener('visibilitychange', () => {
 /**
  * Initialize when page loads
  */
-document.addEventListener('DOMContentLoaded', () => {
+let isInitialized = false;
+
+function initializeExam() {
+    if (isInitialized) {
+        console.warn('Exam already initialized, skipping...');
+        return;
+    }
+    isInitialized = true;
     console.log('Exam page loaded');
     loadQuestions();
-});
+}
 
-// Also start if DOM already loaded
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadQuestions);
+    document.addEventListener('DOMContentLoaded', initializeExam);
 } else {
-    loadQuestions();
-
+    initializeExam();
 }
 
